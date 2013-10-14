@@ -176,10 +176,21 @@ void VideoSource::draw(int x, int y) {
 //for getting and setting gain and exposure
 //settings for the PS Eye on Win boxes
 #ifndef TARGET_OSX
+//gain for Code Lab PS Eye is 0 to 79
 int VideoSource::getGain() {
     return ofVidGrabber.getGain();
 }
+
 void VideoSource::setGain(int gain_) {
     ofVidGrabber.setGain(gain_);
+}
+
+//exposure for Code Lab PS Eye is 0 to 511
+int VideoSource::getExposure() {
+    return ofVidGrabber.getExposure();
+}
+
+void VideoSource::setExposure(int exposure_) {
+    ofVidGrabber.setExposure(exposure_);
 }
 #endif // TARGET_OSX

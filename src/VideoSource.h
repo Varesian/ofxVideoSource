@@ -55,6 +55,8 @@ public:
 #ifndef TARGET_OSX
     int getGain();
     void setGain(int gain);
+    int getExposure();
+    void setExposure(int exposure);
 #endif
 
 private:
