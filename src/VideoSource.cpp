@@ -31,7 +31,7 @@ void VideoSource::setupCamera()
     } else if (videoType == VideoTypeOfVideoGrabber || videoType == VideoTypeCodeLabsPSEye) {
 
         setupCamera(0);
-        
+
     } else if (videoType == VideoTypeDcCameraGrabber) {
 
         #ifdef TARGET_OSX
@@ -48,19 +48,19 @@ void VideoSource::setupCamera()
 
 void VideoSource::setupCamera(int deviceID) {
     if (videoType == VideoTypeOfVideoGrabber || videoType == VideoTypeCodeLabsPSEye) {
-        
+
         cout << "ofVidGrabber is initialized: " << ofVidGrabber.isInitialized() << endl;
         ofVidGrabber.setDeviceID(deviceID);
         ofVidGrabber.initGrabber(320, 240);  // TODO should pass in desired width & height here
         ofVidGrabber.setDesiredFrameRate(60);
-        
+
         if (videoType == VideoTypeCodeLabsPSEye) {
 #ifndef TARGET_OSX
             ofVidGrabber.setAutoExposure(false);
             ofVidGrabber.setAutoGain(false);
 #endif
         }
-        
+
         // make sure there is sufficient space allocated for the current camera size
         pixels.allocate(getCameraHeight(), getCameraWidth(), OF_IMAGE_COLOR);
     }
@@ -85,14 +85,14 @@ bool VideoSource::updateFrame()
 
         if (bNewFrame) {
             pixels.setFromPixels(ofVidGrabber.getPixels(), ofVidGrabber.getWidth(), ofVidGrabber.getHeight(), OF_IMAGE_COLOR);
-            
+
             //ofVidGrabberFrame.setFromPixels(ofVidGrabber.getPixels(), ofVidGrabber.getWidth(), ofVidGrabber.getHeight());
 
         }
     } else if (videoType == VideoTypeDcCameraGrabber) {
 
         #ifdef TARGET_OSX
-        
+
         bNewFrame = dcCameraGrabber.camera.grabVideo(dcGrabberFrame);
 
         if (dcGrabberFrame.getWidth() != getCameraWidth() || dcGrabberFrame.getHeight() != getCameraHeight()) {
@@ -101,7 +101,7 @@ bool VideoSource::updateFrame()
 
             dcGrabberFrame.allocate(getCameraWidth(), getCameraHeight(), OF_IMAGE_COLOR);
         }
-         
+
         #endif
     } else if (videoType == VideoTypePS3EyeGrabber) {
         #ifdef TARGET_OSX
@@ -173,3 +173,13 @@ void VideoSource::draw(int x, int y) {
     }
 }
 
+//for getting and setting gain and exposure
+//settings for the PS Eye on Win boxes
+#ifndef TARGET_OSX
+int VideoSource::getGain() {
+    return ofVidGrabber.getGain();
+}
+void VideoSource::setGain(int gain_) {
+    ofVidGrabber.setGain(gain_);
+}
+#endif // TARGET_OSX

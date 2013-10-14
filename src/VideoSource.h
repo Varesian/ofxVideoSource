@@ -50,6 +50,13 @@ public:
 
     void draw(int x, int y);
 
+//for getting and setting PS Eye gain and exposure
+//on Win boxes
+#ifndef TARGET_OSX
+    int getGain();
+    void setGain(int gain);
+#endif
+
 private:
 
 #ifdef TARGET_OSX
@@ -57,9 +64,9 @@ private:
 #else
     ofxCLeye ofVidGrabber;
 #endif
-    
+
     ofVideoPlayer vidPlayer;
-    
+
     ofPixels pixels;
 
 #ifdef TARGET_OSX
