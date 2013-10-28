@@ -59,15 +59,16 @@ public:
     void setExposure(int exposure);
 #endif
 
-private:
-
 #ifdef TARGET_OSX
     ofVideoGrabber ofVidGrabber;
 #else
     ofxCLeye ofVidGrabber;
 #endif
-
+    
     ofVideoPlayer vidPlayer;
+
+private:
+
 
     ofPixels pixels;
 
